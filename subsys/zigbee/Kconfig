@@ -71,6 +71,9 @@ config ZIGBEE_ROLE_ROUTER
 config ZIGBEE_ROLE_COORDINATOR
 	bool "Coordinator role"
 
+config ZIGBEE_ROLE_MULTIROLE
+	bool "All-in-one role"
+
 endchoice
 
 config ZBOSS_DEFAULT_THREAD_PRIORITY

@@ -215,6 +215,11 @@ static int zigbee_init(struct device *unused)
 	zb_set_network_router_role(channel_mask);
 #elif defined(CONFIG_ZIGBEE_ROLE_END_DEVICE)
 	zb_set_network_ed_role(channel_mask);
+#elif defined(CONFIG_ZIGBEE_ROLE_MULTIROLE)
+	/*
+	 * In case of multirole setup, the channel mask and role must
+	 * be defined by the application code, before calling zigbee_enable().
+	 */
 #else
 #error Zigbee device role undefined!
 #endif

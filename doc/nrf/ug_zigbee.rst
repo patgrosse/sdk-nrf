@@ -55,9 +55,17 @@ After that, you have to define the Zigbee device role for the Zigbee application
 * Router role: :option:`CONFIG_ZIGBEE_ROLE_ROUTER`
 * End device role: :option:`CONFIG_ZIGBEE_ROLE_END_DEVICE`
 * Coordinator role: :option:`CONFIG_ZIGBEE_ROLE_COORDINATOR`
+* All-in-one role: :option:`CONFIG_ZIGBEE_ROLE_MULTIROLE`
 
 Setting any of these options enables the respective ZBOSS role library.
 This is needed because end devices use different libraries than routers and coordinators.
+
+If the all-in-one role is selected, the application has to set the channel mask and a Zigbee role to start with, before calling :cpp:func:`zigbee_enable`.
+This is accomplished by calling one of ZBOSSS API functions, following the naming scheme:
+``zb_set_network_<selected_zigbee_role>_role(<selected_channel_mask>)``
+Where:
+* <selected_zigbee_role> should be one of `router`, `coordinator` or `ed`.
+* <selected_channel_mask> should be equal to `(1UL << CONFIG_ZIGBEE_CHANNEL)` or `CONFIG_ZIGBEE_CHANNEL_MASK`, depending on the desired channel selection mode.
 
 For instructions about how to set Kconfig options, see :ref:`configure_application`.
 
