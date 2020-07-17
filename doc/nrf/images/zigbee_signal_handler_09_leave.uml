@@ -1,0 +1,11 @@
+@startuml
+
+:ZB_ZDO_SIGNAL_LEAVE;
+
+    if (status == RET_OK) then (no)
+    else (yes)
+        :start_network_rejoin();
+    endif
+stop
+
+@enduml
