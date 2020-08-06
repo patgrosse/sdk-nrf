@@ -2,7 +2,7 @@
 
 :ZB_ZDO_SIGNAL_PRODUCTION_CONFIG_READY;
 
-:NRF_LOG_INFO(load_status);
+:LOG_INF(load_status);
 
 stop
 

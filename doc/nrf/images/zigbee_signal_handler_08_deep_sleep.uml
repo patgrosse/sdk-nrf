@@ -2,10 +2,8 @@
 
 :ZB_COMMON_SIGNAL_CAN_SLEEP;
 partition zb_sleep_now() {
-partition zb_nrf52840_sleep() #AntiqueWhite {
-        :zb_nrf52840_priph_disable();
-        :zb_osif_wait_for_event();
-        :zb_nrf52840_priph_enable();
+partition zb_osif_sleep() #AntiqueWhite {
+        :zigbee_event_poll(inactivity_time);
 }
 }
 

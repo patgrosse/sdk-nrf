@@ -275,6 +275,11 @@ The minimal inactivity duration that causes the signal to be generated is define
 By default, the inactivity duration equals approximately 15 ms.
 The value can be modified by the ``zb_sleep_set_threshold`` API.
 
+    .. figure:: /images/zigbee_signal_handler_07_idle.png
+       :alt: Generation of the ZB_COMMON_SIGNAL_CAN_SLEEP signal
+
+       Generation of the ZB_COMMON_SIGNAL_CAN_SLEEP signal
+
 The signal can be used to suspend the Zigbee task for the inactivity period.
 This allows the Zephyr kernel to switch to other tasks with lower priority.
 Additionally, it allows to implement a Zigbee Sleepy End Device.
