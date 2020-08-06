@@ -275,10 +275,10 @@ The minimal inactivity duration that causes the signal to be generated is define
 By default, the inactivity duration equals approximately 15 ms.
 The value can be modified by the ``zb_sleep_set_threshold`` API.
 
-    .. figure:: /images/zigbee_signal_handler_07_idle.png
-       :alt: Generation of the ZB_COMMON_SIGNAL_CAN_SLEEP signal
+.. figure:: /images/zigbee_signal_handler_07_idle.png
+   :alt: Generation of the ZB_COMMON_SIGNAL_CAN_SLEEP signal
 
-       Generation of the ZB_COMMON_SIGNAL_CAN_SLEEP signal
+   Generation of the ZB_COMMON_SIGNAL_CAN_SLEEP signal
 
 The signal can be used to suspend the Zigbee task for the inactivity period.
 This allows the Zephyr kernel to switch to other tasks with lower priority.
@@ -290,7 +290,7 @@ If so, it will allow the Zigbee stack to enter the sleep state and suspend the Z
 
 If the default behavior is not applicable for the application, you can customize the sleep functionality by overwriting the :cpp:func:`zb_osif_sleep` weak function and implementing a custom logic for handling the stack sleep state.
 
-    .. figure:: /images/zigbee_signal_handler_08_deep_sleep.png
-       :alt: Implementing a custom logic for putting the stack into the sleep mode
+.. figure:: /images/zigbee_signal_handler_08_deep_sleep.png
+   :alt: Implementing a custom logic for putting the stack into the sleep mode
 
-       Implementing a custom logic for putting the stack into the sleep mode
+   Implementing a custom logic for putting the stack into the sleep mode
