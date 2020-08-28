@@ -74,7 +74,6 @@
 
 .. _`Programming applications on Nordic Thingy:91`: https://infocenter.nordicsemi.com/topic/ug_nc_programmer/UG/nrf_connect_programmer/ncp_programming_appln_thingy91.html
 
-
 .. _`Programming the Thingy:91 modem`: https://infocenter.nordicsemi.com/topic/ug_nc_programmer/UG/nrf_connect_programmer/ncp_updating_modem_thingy91_intro.html
 
 .. _`nRF52 Series`: https://infocenter.nordicsemi.com/topic/struct_nrf52/struct/nrf52.html
@@ -86,6 +85,8 @@
 .. _`anomaly 19`: https://infocenter.nordicsemi.com/topic/errata_nRF5340_EngA/ERR/nRF5340/EngineeringA/latest/anomaly_340_19.html
 
 .. _`nRF9160 compatibility matrix`: https://infocenter.nordicsemi.com/topic/comp_matrix_nrf9160/COMP/nrf9160/nrf9160_operator_certifications.html
+
+.. _`DFU over Zigbee`: https://infocenter.nordicsemi.com/topic/ug_nrfutil/UG/nrfutil/nrfutil_dfu_zigbee.html
 
 .. ### Links to the Nordic website
 
