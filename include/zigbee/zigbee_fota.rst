@@ -40,7 +40,7 @@ If all values are accepted, the first fragment of the firmware image is download
 After receiving the first fragment, the :ref:`lib_dfu_target` library is used to identify the type of the image that is being downloaded.
 For example, the image type can be modem upgrades and upgrades handled by MCUboot.
 Once the download is started, all received data fragments are passed to the :ref:`lib_dfu_target` library.
-The :ref:`lib_dfu_target` library takes care of where the upgrade candidate is stored, depending on the image type that is being downloaded.
+The library takes care of where the upgrade candidate is stored, depending on the image type that is being downloaded.
 
 When the download is completed, the download client sends an appropriate event.
 At this point, the received firmware is tagged as an upgrade candidate and the OTA server is queried for an update time.
@@ -55,17 +55,27 @@ To enable the Zigbee FOTA library, set the :option:`CONFIG_ZIGBEE_FOTA` Kconfig 
 
 To configure the Zigbee FOTA library, use the following options:
 
-* :option:`CONFIG_ZIGBEE_FOTA_ENDPOINT`
-* :option:`CONFIG_ZIGBEE_FOTA_DATA_BLOCK_SIZE`
 * :option:`CONFIG_ZIGBEE_FOTA_HW_VERSION`
+* :option:`CONFIG_ZIGBEE_FOTA_DATA_BLOCK_SIZE`
+* :option:`CONFIG_ZIGBEE_FOTA_ENDPOINT`
+* :option:`CONFIG_ZIGBEE_FOTA_PROGRESS_EVT`
 * :option:`CONFIG_ZIGBEE_FOTA_MANUFACTURER_ID`
 * :option:`CONFIG_ZIGBEE_FOTA_IMAGE_TYPE`
+* :option:`CONFIG_ZIGBEE_FOTA_COMMENT`
+* :option:`CONFIG_ENABLE_ZIGBEE_FOTA_MIN_HW_VERSION`
+* :option:`CONFIG_ZIGBEE_FOTA_MIN_HW_VERSION`
+* :option:`CONFIG_ENABLE_ZIGBEE_FOTA_MAX_HW_VERSION`
+* :option:`CONFIG_ZIGBEE_FOTA_MAX_HW_VERSION`
+
+For detailed steps about configuring the Zigbee FOTA in a Zigbee application, see :ref:`ug_zigbee_configuring_components_ota`.
 
 Limitations
 ***********
 
 The Zigbee FOTA library has the following limitations:
 
+* The endpoint definition in the library includes the endpoint ID, defined with :option:`CONFIG_ZIGBEE_FOTA_ENDPOINT`.
+  When using the Zigbee FOTA library, this endpoint ID cannot be used for other endpoints.
 * The Zigbee FOTA upgrades are currently only supported on the nRF52840 DK board (PCA10056).
 * In case of an MCU reset between the completion of the OTA image transfer and a postponed firmware upgrade, the upgrade will be applied immediately.
 
