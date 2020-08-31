@@ -13,7 +13,10 @@ The library uses the endpoint to:
 * Transfer the new firmware using the ZCL OTA cluster commands.
 * Allow the OTA server to manage the upgrade process using the ZCL OTA control commands.
 
-The Zigbee FOTA functionality has been added to the :ref:`zigbee_light_switch_sample` sample.
+When used, the Zigbee FOTA library replaces the :ref:`lib_fota_download` library in |NCS|.
+
+.. note::
+    The Zigbee FOTA functionality has been added to the :ref:`zigbee_light_switch_sample` sample.
 
 OTA upgrade entities
 ********************
@@ -27,18 +30,21 @@ The following entities participate in the Zigbee OTA Upgrade process:
 OTA upgrade process
 *******************
 
+After querying the OTA Upgrade Server for available images and receiving information about the image, the library begins the OTA upgrade process.
 The library uses :ref:`nrfxlib:zboss`'s ZCL API to download the image.
-After downloading the Zigbee OTA image header, the stack verifies the following mandatory fields:
 
-* Manufacturer ID
+After the OTA Upgrade Client downloads the Zigbee OTA image header, the stack verifies the following mandatory fields:
+
+* Manufacturer ID - Defined by the :option:`CONFIG_ZIGBEE_FOTA_MANUFACTURER_ID` Kconfig option.
 * Image type - Defined by the :option:`CONFIG_ZIGBEE_FOTA_IMAGE_TYPE` Kconfig option; it may be different than the MCUboot image type value.
-* Hardware version
-* Firmware version
+* Hardware version - Defined by the :option:`CONFIG_ZIGBEE_FOTA_HW_VERSION` Kconfig option.
+* Firmware version - Defined by the :option:`CONFIG_MCUBOOT_IMAGE_VERSION` Kconfig option; see :ref:`ug_zigbee_configuring_components_ota` for details.
 
-If all values are accepted, the first fragment of the firmware image is downloaded.
+If all values are accepted, the OTA Upgrade Client downloads the first fragment of the firmware image.
 
-After receiving the first fragment, the :ref:`lib_dfu_target` library is used to identify the type of the image that is being downloaded.
-For example, the image type can be modem upgrades and upgrades handled by MCUboot.
+After receiving the first fragment, the :ref:`lib_dfu_target` library automatically identifies the type of the image that is being downloaded.
+For supported upgrade types, see the library documentation page.
+
 Once the download is started, all received data fragments are passed to the :ref:`lib_dfu_target` library.
 The library takes care of where the upgrade candidate is stored, depending on the image type that is being downloaded.
 
@@ -47,6 +53,8 @@ At this point, the received firmware is tagged as an upgrade candidate and the O
 
 Once the OTA server triggers the update process, the library sends a :cpp:enumerator:`ZIGBEE_FOTA_EVT_FINISHED <zigbee_fota::ZIGBEE_FOTA_EVT_FINISHED>` callback event.
 When the consumer of the library receives this event, it should issue a reboot command to apply the upgrade.
+
+.. _lib_zigbee_fota_options:
 
 Configuration
 *************
@@ -77,6 +85,7 @@ The Zigbee FOTA library has the following limitations:
 * The endpoint definition in the library includes the endpoint ID, defined with :option:`CONFIG_ZIGBEE_FOTA_ENDPOINT`.
   When using the Zigbee FOTA library, this endpoint ID cannot be used for other endpoints.
 * The Zigbee FOTA upgrades are currently only supported on the nRF52840 DK board (PCA10056).
+* The Zigbee FOTA library does not currently support bootloader upgrades.
 * In case of an MCU reset between the completion of the OTA image transfer and a postponed firmware upgrade, the upgrade will be applied immediately.
 
 API documentation

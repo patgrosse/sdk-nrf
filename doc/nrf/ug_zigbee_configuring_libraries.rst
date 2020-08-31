@@ -25,7 +25,7 @@ Configuring Zigbee FOTA
 The Zigbee Over The Air Device Firmware Upgrade (:ref:`lib_zigbee_fota`) library provides a mechanism to upgrade the firmware of the device through the Zigbee network.
 
 To enable and configure the library, you must set the :option:`CONFIG_ZIGBEE_FOTA` Kconfig option.
-Other Kconfig options for the :ref:`lib_zigbee_fota` library can be used with default values.
+Other :ref:`Zigbee FOTA Kconfig options <lib_zigbee_fota_options>` can be used with default values.
 
 Because the Zigbee OTA DFU performs the upgrade using the :ref:`lib_dfu_target` library, the are several non-Zigbee options that must be set to configure the update process:
 
