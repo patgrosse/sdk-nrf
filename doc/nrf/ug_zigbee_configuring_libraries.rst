@@ -93,6 +93,8 @@ If you want to use the Zigbee FOTA functionality in your application, you must a
 
       boot_write_img_confirmed();
 
+See the :file:`samples/zigbee/light_switch/src/main.c` file of the :ref:`zigbee_light_switch_sample` sample for an example implementation of the Zigbee FOTA in an application.
+
 Generating Zigbee FOTA upgrade image
 ====================================
 
