@@ -217,8 +217,14 @@ void main(void)
 	/* Initialize */
 	configure_gpio();
 
-	/* Start Zigbee default thread */
-	zigbee_enable();
+	zb_ret_t zb_err_code;
+
+	zb_err_code = zboss_start_no_autostart();
+	__ASSERT(zb_err_code == RET_OK, "Error when starting ZBOSS stack!");
+
+	while (1) {
+		zboss_main_loop_iteration();
+	}
 
 	LOG_INF("ZBOSS Coordinator example started");
 
