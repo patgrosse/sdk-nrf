@@ -165,7 +165,20 @@ void zb_trans_get_rssi(zb_uint8_t *rssi_value_p)
 /* Set channel and go to the normal (not ed scan) mode */
 void zb_trans_set_channel(zb_uint8_t channel_number)
 {
+	struct net_pkt *pkt;
+
 	LOG_DBG("Function: %s, channel number: %d", __func__, channel_number);
+
+	/* Turn off radio before channel switch. */
+	zb_trans_enter_sleep();
+
+	/* Flush RX queue before setting the new channel. */
+	do {
+		pkt = k_fifo_get(&rx_fifo, K_MSEC(100));
+		if (pkt) {
+			net_pkt_unref(pkt);
+		}
+	} while (pkt != NULL);
 
 	radio_api->set_channel(radio_dev, channel_number);
 }
