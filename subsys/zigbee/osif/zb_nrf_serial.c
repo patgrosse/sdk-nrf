@@ -16,7 +16,6 @@ static K_SEM_DEFINE(rx_done_sem, 1, 1);
 static const struct device *uart_dev;
 static bool is_sleeping;
 
-static zb_callback_t char_handler;
 static serial_recv_data_cb_t rx_data_cb;
 static serial_send_data_cb_t tx_data_cb;
 static serial_send_data_cb_t tx_trx_data_cb;
@@ -63,15 +62,6 @@ static void uart_rx_notify(zb_bufid_t bufid)
 
 	if (rx_data_cb) {
 		rx_data_cb(rx_buf, rx_buf_len);
-	}
-}
-
-static void uart_rx_bytes(uint8_t *buf, size_t len)
-{
-	if (char_handler) {
-		for (size_t i = 0; i < len; i++) {
-			char_handler(buf[i]);
-		}
 	}
 }
 
@@ -126,7 +116,6 @@ static void handle_rx_ready_evt(const struct device *dev)
 			&uart_rx_buf[uart_rx_buf_offset],
 			uart_rx_buf_len - uart_rx_buf_offset);
 
-		uart_rx_bytes(&uart_rx_buf[uart_rx_buf_offset], recv_len);
 		uart_rx_buf_offset += recv_len;
 
 		if (uart_rx_buf_offset == uart_rx_buf_len) {
@@ -146,7 +135,6 @@ static void handle_rx_ready_evt(const struct device *dev)
 		}
 	} else {
 		recv_len = uart_fifo_read(dev, buffer, sizeof(buffer));
-		uart_rx_bytes(buffer, recv_len);
 
 		/* Store remaining bytes inside the ring buffer. */
 		if (recv_len > ring_buf_space_get(&rx_ringbuf)) {
@@ -217,7 +205,6 @@ void zb_osif_async_serial_init(void)
 	/*
 	 * Reset all static variables in case of runtime init/uninit sequence.
 	 */
-	char_handler = NULL;
 	rx_data_cb = NULL;
 	tx_data_cb = NULL;
 	tx_trx_data_cb = NULL;
@@ -362,11 +349,6 @@ void zb_osif_async_serial_flush(void)
 
 
 #ifdef SPAGHETTI
-void zb_osif_set_uart_byte_received_cb(zb_callback_t hnd)
-{
-	char_handler = hnd;
-}
-
 void zb_osif_set_user_io_buffer(zb_byte_array_t *buf_ptr, zb_ushort_t capacity)
 {
 	(void)k_sem_take(&tx_done_sem, K_FOREVER);
