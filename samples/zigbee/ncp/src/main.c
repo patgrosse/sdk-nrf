@@ -102,7 +102,7 @@ static void perform_custom_indication(zb_uint8_t led_idx)
 	zb_buf_get_out_delayed_ext(custom_indication, led_idx, 0);
 }
 
-static zb_ret_t ncp_vendor_specific_req_handler(zb_uint8_t buf)
+static zb_uint16_t ncp_vendor_specific_req_handler(zb_uint8_t buf)
 {
 	/* request tsn */
 	zb_uint8_t tsn = *ZB_BUF_GET_PARAM(buf, zb_uint8_t);
