@@ -20,6 +20,8 @@ manifest:
     # NCS repositories are hosted here.
     - name: ncs
       url-base: https://github.com/nrfconnect
+    - name: gh-tomchy
+      url-base: https://github.com/tomchy
     # Third-party repository sources:
     - name: zephyrproject
       url-base: https://github.com/zephyrproject-rtos
@@ -109,7 +111,8 @@ manifest:
     - name: nrfxlib
       repo-path: sdk-nrfxlib
       path: nrfxlib
-      revision: pull/635/head
+      remote: gh-tomchy
+      revision: test/zigbee/Verify_zcl8_libraries
     - name: trusted-firmware-m
       repo-path: sdk-trusted-firmware-m
       path: modules/tee/tf-m/trusted-firmware-m
