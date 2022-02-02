@@ -25,7 +25,7 @@ bool dfu_target_mcuboot_identify(const void *const buf)
 	return identify_retval;
 }
 
-int dfu_target_mcuboot_init(size_t file_size, dfu_target_callback_t cb)
+int dfu_target_mcuboot_init(size_t file_size, int img_num, dfu_target_callback_t cb)
 {
 	return init_retval;
 }
@@ -46,6 +46,11 @@ int dfu_target_mcuboot_write(const void *const buf, size_t len)
 int dfu_target_mcuboot_done(bool successful)
 {
 	return done_retval;
+}
+
+int dfu_target_mcuboot_schedule_update(int img_num)
+{
+	return 0;
 }
 
 static void init(void)

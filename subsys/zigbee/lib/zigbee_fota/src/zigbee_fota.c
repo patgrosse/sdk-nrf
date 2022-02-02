@@ -354,6 +354,7 @@ static zb_uint8_t ota_process_firmware(zb_uint8_t *data, uint32_t len,
 		ota_ctx.mandatory_header_finished = false;
 
 		err = dfu_target_done(true);
+
 		if (err != 0) {
 			LOG_ERR("dfu_target_done error: %d",
 				err);
@@ -568,6 +569,9 @@ void zigbee_fota_zcl_cb(zb_bufid_t bufid)
 
 	case ZB_ZCL_OTA_UPGRADE_STATUS_APPLY:
 		LOG_INF("Mark OTA image as ready to be installed.");
+		if (dfu_target_schedule_update(0)) {
+			LOG_ERR("Unable to schedule the update");
+		}
 		ota_upgrade_value->upgrade_status =
 			ZB_ZCL_OTA_UPGRADE_STATUS_OK;
 		send_progress(ZIGBEE_FOTA_EVT_DL_COMPLETE_VAL);
