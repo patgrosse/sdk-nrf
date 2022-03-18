@@ -132,10 +132,6 @@ int dfu_target_done(bool successful)
 		return err;
 	}
 
-	if (successful) {
-		current_target = NULL;
-	}
-
 	return 0;
 }
 
@@ -155,5 +151,14 @@ int dfu_target_reset(void)
 
 int dfu_target_schedule_update(int img_num)
 {
-	return current_target->schedule_update(img_num);
+	int err = 0;
+
+	if (current_target == NULL) {
+		return -EACCES;
+	}
+
+	err = current_target->schedule_update(img_num);
+	current_target = NULL;
+
+	return err;
 }

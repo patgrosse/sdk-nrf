@@ -467,7 +467,7 @@ void zigbee_fota_abort(void)
 	LOG_INF("ABORT Zigbee DFU");
 	/* Reset the context. */
 	ota_dfu_reset();
-	dfu_target_done(false);
+	dfu_target_reset();
 }
 
 int zigbee_fota_init(zigbee_fota_callback_t client_callback)
@@ -569,11 +569,14 @@ void zigbee_fota_zcl_cb(zb_bufid_t bufid)
 
 	case ZB_ZCL_OTA_UPGRADE_STATUS_APPLY:
 		LOG_INF("Mark OTA image as ready to be installed.");
-		if (0/*dfu_target_schedule_update(0)*/) {
+		if (dfu_target_schedule_update(0)) {
 			LOG_ERR("Unable to schedule the update");
+			ota_upgrade_value->upgrade_status =
+				ZB_ZCL_OTA_UPGRADE_STATUS_ERROR;
+		} else {
+			ota_upgrade_value->upgrade_status =
+				ZB_ZCL_OTA_UPGRADE_STATUS_OK;
 		}
-		ota_upgrade_value->upgrade_status =
-			ZB_ZCL_OTA_UPGRADE_STATUS_OK;
 		send_progress(ZIGBEE_FOTA_EVT_DL_COMPLETE_VAL);
 		break;
 

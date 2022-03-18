@@ -226,18 +226,11 @@ int dfu_target_mcuboot_done(bool successful)
 	return err;
 }
 
-int call_me(int x)
-{
-	return 0;
-}
-
 static int dfu_target_mcuboot_schedule_one_img(int img_num)
 {
 	int err = 0;
 
-	/*err = boot_request_upgrade_multi(img_num, BOOT_UPGRADE_TEST);*/
-	/*err = boot_request_upgrade(BOOT_UPGRADE_TEST);*/
-	err = call_me(0);
+	err = boot_request_upgrade_multi(img_num, BOOT_UPGRADE_TEST);
 	if (err != 0) {
 		LOG_ERR("boot_request_upgrade for image-%d error %d",
 			img_num, err);
